@@ -19,6 +19,30 @@ How to use
 * `ruby update.rb`
 * Enjoy!
 
+Output example
+==============
+
+```
+$ ruby update.rb
+Working on rbot22
+chk=MLCGZT
+Unlocking mission
+Fighting 0
+Fighting 1
+Fighting 2
+Mission 0
+Mission 1
+Mission 2
+Raid 0
+Raid 1
+Raid 2
+Raid 3
+Raid 4
+Checking if can upgrade
+Has 12 money, and need 129 for upgrade
+Finished successfully
+```
+
 Info
 ====
 
