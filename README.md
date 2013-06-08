@@ -11,6 +11,14 @@ Features:
 * Check if trooper needs upgrade
 * In the end, return list of troopers that can upgrade
 
+How to use
+==========
+
+* Clone repo
+* `bundle`
+* `ruby update.rb`
+* Enjoy!
+
 Info
 ====
 
