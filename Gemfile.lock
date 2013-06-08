@@ -8,10 +8,19 @@ GEM
       debugger-ruby_core_source (~> 1.2.1)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.2)
+    domain_name (0.5.12)
+      unf (>= 0.0.5, < 1.0.0)
     faraday (0.8.7)
       multipart-post (~> 1.1)
+    faraday-cookie_jar (0.0.3)
+      faraday (>= 0.7.4)
+      http-cookie (~> 1.0.0)
+    http-cookie (1.0.1)
+      domain_name (~> 0.5)
     multipart-post (1.2.0)
-    nokogiri (1.5.10)
+    unf (0.1.1)
+      unf_ext
+    unf_ext (0.0.6)
 
 PLATFORMS
   ruby
@@ -19,4 +28,4 @@ PLATFORMS
 DEPENDENCIES
   debugger
   faraday
-  nokogiri
+  faraday-cookie_jar
