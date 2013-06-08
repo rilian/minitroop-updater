@@ -62,7 +62,6 @@ trooper_names = %w[
   rbot35
   rbot36
   rbot37
-  rbot38
   rbot39
 ]
 
@@ -131,7 +130,7 @@ trooper_names.each do |trooper_name|
 
   upgrade_cost = upgrade_page.scan(/Upgrade\s+for\s+([0-9]+)/).flatten.first.to_i
   have_money = upgrade_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
-  if upgrade_cost <= have_money
+  if upgrade_cost <= have_money && have_money > 0
     @can_upgrade_troopers << trooper_name
   end
   puts "Has #{have_money} money, and need #{upgrade_cost} for upgrade"
