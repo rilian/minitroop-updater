@@ -1,7 +1,10 @@
 Minitroopers controller
 ==============================
 
-Features:
+Controller script to manage recruited troopers in the game http://rilian.minitroopers.com
+
+Features
+========
 
 * Crawl through all given trooper names
 * Unlock missions
