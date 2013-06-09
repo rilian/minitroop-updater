@@ -69,7 +69,7 @@ punch_troopers = %w[
   fenchenko
 ]
 
-SLEEP = 5
+SLEEP = 4
 DEBUG = false
 @can_upgrade_troopers = []
 
@@ -84,6 +84,9 @@ trooper_names.each do |trooper_name|
   end
   hq_page = conn.get('/hq', 'User-Agent' => 'MyLib v1.2').body
 
+  # Find current money
+  had_money = hq_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
+
   # Find chk
   chk_arr = hq_page.scan(/miss[^c]+chk=([a-zA-Z0-9]+)/).flatten
   chk = chk_arr.size > 0 ? chk_arr.first : nil
@@ -91,31 +94,30 @@ trooper_names.each do |trooper_name|
   puts chk ? "chk=#{chk}" : 'Could not find chk!'
 
   if chk
-    # Check if can go to Raids
-    can_raid = (hq_page.scan(/b\/raid\?/).size > 0)
-
     # Unlock mission if possible
     sleep(2)
     puts 'Unlocking mission'
     conn.get "/unlock?mode=miss;chk=#{chk}"
 
-    # Perform 3 fights
+    # Perform 3 Fights
     3.times do |index|
       sleep(SLEEP)
       puts "Fighting #{index}"
-      conn.post '/b/battle', { chk: chk, friend: punch_troopers.sample }
+      conn.post '/b/battle', {chk: chk, friend: punch_troopers.sample}
     end
 
-    # Perform 3 missions
+    # Perform 3 Missions
     3.times do |index|
       sleep(SLEEP)
       puts "Mission #{index}"
       conn.get "b/mission?chk=#{chk}"
     end
 
+    # Check if can go to Raids
+    can_raid = (hq_page.scan(/b\/raid\?/).size > 0)
     if can_raid
-      # Perform 5 raids
-      5.times do |index|
+      # Perform 3 Raids
+      3.times do |index|
         sleep(SLEEP)
         puts "Raid #{index}"
         conn.get "b/raid?chk=#{chk}"
@@ -133,7 +135,7 @@ trooper_names.each do |trooper_name|
   if upgrade_cost <= have_money && have_money > 0
     @can_upgrade_troopers << trooper_name
   end
-  puts "Has #{have_money} money, and need #{upgrade_cost} for upgrade"
+  puts "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for upgrade"
 
   puts '-'
   sleep(SLEEP)

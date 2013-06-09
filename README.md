@@ -10,7 +10,7 @@ Features
 * Unlock missions
 * Fight 3 times
 * Go to Mission 3 times
-* Raid 5 times
+* Raid 3 times
 * Check if trooper needs upgrade
 * In the end, return list of troopers that can upgrade
 
