@@ -23,6 +23,8 @@ trooper_names = %w[
   supril9
   supril9-1
   supril10
+  supril11
+  supril12
   super-rilian
   andreyfenchenko
   rbot1
