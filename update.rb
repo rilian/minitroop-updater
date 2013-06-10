@@ -17,17 +17,23 @@ punch_troopers = %w[
 SLEEP = 4
 DEBUG = false
 @can_upgrade_troopers = []
+@log_file = File.open("#{Time.now.strftime('%d-%b_%H-%M-%S')}_minitroopers.log", 'w')
+
+def log(str)
+  @log_file.write("#{str}\r\n")
+  puts str
+end
 
 trooper_names.each do |trooper_name|
   sleep(SLEEP)
-  puts "Working on #{trooper_name}"
+  log "Working on #{trooper_name} #{trooper_names.index(trooper_name)} of #{trooper_names.count}"
   conn = Faraday.new(url: "http://#{trooper_name}.minitroopers.com") do |faraday|
     faraday.request :url_encoded # form-encode POST params
     faraday.response :logger if DEBUG
     faraday.use :cookie_jar
     faraday.adapter Faraday.default_adapter
   end
-  hq_page = conn.get('/hq', 'User-Agent' => 'MyLib v1.2').body
+  hq_page = conn.get('/hq').body
 
   # Find current money
   had_money = hq_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
@@ -36,12 +42,12 @@ trooper_names.each do |trooper_name|
   chk_arr = hq_page.scan(/miss[^c]+chk=([a-zA-Z0-9]+)/).flatten
   chk = chk_arr.size > 0 ? chk_arr.first : nil
 
-  puts chk ? "chk=#{chk}" : 'Could not find chk!'
+  log chk ? "chk=#{chk}" : 'Could not find chk!'
 
   if chk
     # Unlock mission if possible
     sleep(2)
-    puts 'Unlocking mission'
+    log 'Unlocking mission'
     conn.get "/unlock?mode=miss;chk=#{chk}"
 
     # Perform 3 Missions
@@ -49,14 +55,14 @@ trooper_names.each do |trooper_name|
     # which is better for winning more
     3.times do |index|
       sleep(SLEEP)
-      puts "Mission #{index}"
+      log "Mission #{index}"
       conn.get "b/mission?chk=#{chk}"
     end
 
     # Perform 3 Fights
     3.times do |index|
       sleep(SLEEP)
-      puts "Fighting #{index}"
+      log "Fighting #{index}"
       conn.post '/b/battle', {chk: chk, friend: punch_troopers.sample}
     end
 
@@ -66,7 +72,7 @@ trooper_names.each do |trooper_name|
       # Perform 3 Raids
       3.times do |index|
         sleep(SLEEP)
-        puts "Raid #{index}"
+        log "Raid #{index}"
         conn.get "b/raid?chk=#{chk}"
       end
     end
@@ -74,7 +80,7 @@ trooper_names.each do |trooper_name|
 
   sleep(SLEEP)
   # Check if can upgrade
-  puts 'Checking if can upgrade'
+  log 'Checking if can upgrade'
   upgrade_page = conn.get('/t/0').body
 
   upgrade_cost = upgrade_page.scan(/Upgrade\s+for\s+([0-9]+)/).flatten.first.to_i
@@ -82,15 +88,17 @@ trooper_names.each do |trooper_name|
   if upgrade_cost <= have_money && have_money > 0
     @can_upgrade_troopers << trooper_name
   end
-  puts "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for upgrade"
+  log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for upgrade"
 
-  puts '-'
+  log '-'
   sleep(SLEEP)
 end
 
 if @can_upgrade_troopers.size > 0
-  puts 'Upgrade:'
+  log 'Upgrade:'
   @can_upgrade_troopers.each do |trooper_name|
-    puts "http://#{trooper_name}.minitroopers.com/hq"
+    log "http://#{trooper_name}.minitroopers.com/hq"
   end
 end
+
+@log_file.close
