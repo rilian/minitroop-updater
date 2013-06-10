@@ -4,6 +4,7 @@ require 'debugger'
 
 trooper_names = %w[supri2 supri2-1 supril2 supril2-1 supril3 supril3-1 supril4 supril4-1 supril5 supril5-1
   supril6 supril6-1 supril7 supril7-1 supril8-1 supril8 supril8-3 supril9 supril9-1 supril10 supril11 supril12
+  supril14 supril15
   super-rilian andreyfenchenko
   rbot1 rbot2 rbot3 rbot4 rbot5 rbot6 rbot7 rbot8 rbot9 rbot10 rbot11 rbot12 rbot13 rbot14 rbot15 rbot16 rbot17
   rbot18 rbot19 rbot20 rbot21 rbot22 rbot23 rbot24 rbot25 rbot26 rbot27 rbot28 rbot29 rbot30 rbot31 rbot32

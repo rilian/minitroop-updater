@@ -13,6 +13,7 @@ Features
 * Raid 3 times
 * Check if trooper needs upgrade
 * In the end, return list of troopers that can upgrade
+* Log all fights
 
 How to use
 ==========
