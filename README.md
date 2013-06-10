@@ -18,7 +18,8 @@ How to use
 ==========
 
 * Clone repo
-* `bundle`
+* update `.rvmrc` or run `gem install bundler`
+* `bundle install`
 * `ruby update.rb`
 * Enjoy!
 
