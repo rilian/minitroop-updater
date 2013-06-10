@@ -44,18 +44,20 @@ trooper_names.each do |trooper_name|
     puts 'Unlocking mission'
     conn.get "/unlock?mode=miss;chk=#{chk}"
 
+    # Perform 3 Missions
+    # Missions then Fight give better change to Infiltrate mission next time
+    # which is better for winning more
+    3.times do |index|
+      sleep(SLEEP)
+      puts "Mission #{index}"
+      conn.get "b/mission?chk=#{chk}"
+    end
+
     # Perform 3 Fights
     3.times do |index|
       sleep(SLEEP)
       puts "Fighting #{index}"
       conn.post '/b/battle', {chk: chk, friend: punch_troopers.sample}
-    end
-
-    # Perform 3 Missions
-    3.times do |index|
-      sleep(SLEEP)
-      puts "Mission #{index}"
-      conn.get "b/mission?chk=#{chk}"
     end
 
     # Check if can go to Raids
