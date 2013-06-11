@@ -2,18 +2,7 @@ require 'faraday'
 require 'faraday-cookie_jar'
 require 'debugger'
 
-trooper_names = %w[supri2 supri2-1 supril2 supril2-1 supril3 supril3-1 supril4 supril4-1 supril5 supril5-1
-  supril6 supril6-1 supril7 supril7-1 supril8-1 supril8 supril8-3 supril9 supril9-1 supril10 supril11 supril12
-  supril14 supril15
-  super-rilian andreyfenchenko
-  rbot1 rbot2 rbot3 rbot4 rbot5 rbot6 rbot7 rbot8 rbot9 rbot10 rbot11 rbot12 rbot13 rbot14 rbot15 rbot16 rbot17
-  rbot18 rbot19 rbot20 rbot21 rbot22 rbot23 rbot24 rbot25 rbot26 rbot27 rbot28 rbot29 rbot30 rbot31 rbot32
-  rbot33 rbot34 rbot35 rbot36 rbot37 rbot39
-]
-
-punch_troopers = %w[
-  fenchenko
-]
+TROOPERS = YAML::load(File.open('troopers.yml'))
 
 SLEEP = 4
 DEBUG = false
@@ -25,9 +14,9 @@ def log(str)
   puts str
 end
 
-trooper_names.each do |trooper_name|
+TROOPERS['troopers'].each do |trooper_name|
   sleep(SLEEP)
-  log "Working on #{trooper_name} #{trooper_names.index(trooper_name)} of #{trooper_names.count}"
+  log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name)} of #{TROOPERS['troopers'].count}"
   conn = Faraday.new(url: "http://#{trooper_name}.minitroopers.com") do |faraday|
     faraday.request :url_encoded # form-encode POST params
     faraday.response :logger if DEBUG
@@ -64,7 +53,7 @@ trooper_names.each do |trooper_name|
     3.times do |index|
       sleep(SLEEP)
       log "Fighting #{index}"
-      conn.post '/b/battle', {chk: chk, friend: punch_troopers.sample}
+      conn.post '/b/battle', {chk: chk, friend: TROOPERS['punch_troopers'].sample}
     end
 
     # Check if can go to Raids
