@@ -21,7 +21,8 @@ How to use
 * Clone repo
 * update `.rvmrc` or run `gem install bundler`
 * `bundle install`
-* `ruby update.rb`
+* update `troopers.yml` and put your troopers
+* run `ruby update.rb` once a day
 * Enjoy!
 
 Output example
@@ -32,19 +33,19 @@ $ ruby update.rb
 Working on rbot22
 chk=MLCGZT
 Unlocking mission
-Fighting 0
-Fighting 1
-Fighting 2
 Mission 0
 Mission 1
 Mission 2
+Fighting 0
+Fighting 1
+Fighting 2
 Raid 0
 Raid 1
 Raid 2
 Raid 3
 Raid 4
 Checking if can upgrade
-Has 12 money, and need 129 for upgrade
+Has 4->12 money, and need 129 for upgrade
 Finished successfully
 ```
 
