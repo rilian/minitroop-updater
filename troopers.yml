@@ -1,4 +1,5 @@
 troopers:
+  # supa-rilian
   - supri2
   - supri2-1
   - supril3
@@ -26,7 +27,13 @@ troopers:
   - supril14
   - supril14-1
   - supril15
+  - supril15-1
   - supril16
+  - supril16-1
+  - supil17
+  - supril18
+
+  # rilian
   - super-rilian
   - andreyfenchenko
   - rbot1
@@ -67,6 +74,7 @@ troopers:
   - rbot36
   - rbot37
   - rbot39
+
   # kodak
   - wfertyu
   - 25g6fgf

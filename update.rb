@@ -4,7 +4,7 @@ require 'debugger'
 
 TROOPERS = YAML::load(File.open('troopers.yml'))
 
-SLEEP = 4
+SLEEP = 2
 DEBUG = false
 @can_upgrade_troopers = []
 @log_file = File.open("#{Time.now.strftime('%d-%b_%H-%M-%S')}_minitroopers.log", 'w')
