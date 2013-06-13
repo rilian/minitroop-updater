@@ -40,6 +40,8 @@ TROOPERS['troopers'].each do |trooper_name|
     log 'Unlocking mission'
     conn.get "/unlock?mode=miss;chk=#{chk}"
 
+    #TODO: check if has missions
+
     # Perform 3 Missions
     # Missions then Fight give better change to Infiltrate mission next time
     # which is better for winning more
@@ -68,6 +70,8 @@ TROOPERS['troopers'].each do |trooper_name|
     end
   end
 
+  #TODO: check if has recruiters
+
   sleep(SLEEP)
   # Check if can upgrade
   log 'Checking if can upgrade'
@@ -77,8 +81,11 @@ TROOPERS['troopers'].each do |trooper_name|
   have_money = upgrade_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
   if upgrade_cost <= have_money && have_money > 0
     @can_upgrade_troopers << trooper_name
+    log "http://#{trooper_name}.minitroopers.com/t/0"
   end
   log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for upgrade"
+
+  #TODO: try to auto upgrade
 
   log '-'
   sleep(SLEEP)
