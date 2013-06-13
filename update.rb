@@ -87,7 +87,7 @@ end
 if @can_upgrade_troopers.size > 0
   log 'Upgrade:'
   @can_upgrade_troopers.each do |trooper_name|
-    log "http://#{trooper_name}.minitroopers.com/hq"
+    log "http://#{trooper_name}.minitroopers.com/t/0"
   end
 end
 
