@@ -6,6 +6,7 @@ TROOPERS = YAML::load(File.open('troopers.yml'))
 
 SLEEP = 2
 DEBUG = false
+TRY_UPGRADE = false
 @can_upgrade_troopers = []
 @log_file = File.open("#{Time.now.strftime('%d-%b_%H-%M-%S')}_minitroopers.log", 'w')
 
@@ -91,28 +92,30 @@ TROOPERS['troopers'].each do |trooper_name|
     log "Can upgrade http://#{trooper_name}.minitroopers.com/t/0"
     @can_upgrade_troopers << trooper_name
 
-    chk_arr = upgrade_page.scan(/levelup=([a-zA-Z0-9]+)/).flatten
-    chk = chk_arr.size > 0 ? chk_arr.first : nil
-    log chk ? "chk=#{chk}" : 'Could not find chk!'
-
-    if chk && DEBUG
-      # Initialize levelup page
-      sleep(SLEEP)
-      conn.get("t/0?levelup=#{chk}").body
-
-      # Load levelup page
-      sleep(SLEEP)
-      levelup_page = conn.get('/levelup/0').body
-      available_skills = levelup_page.scan(/\/levelup\/0\?skill=(\d+)\&/).flatten.collect { |s| s.to_i }
-      log "Skills to upgrade: #{available_skills}"
-
-      sleep(SLEEP)
-      chk_arr = levelup_page.scan(/skill=[^c]+chk=([a-zA-Z0-9]+)/).flatten
+    if TRY_UPGRADE
+      chk_arr = upgrade_page.scan(/levelup=([a-zA-Z0-9]+)/).flatten
       chk = chk_arr.size > 0 ? chk_arr.first : nil
       log chk ? "chk=#{chk}" : 'Could not find chk!'
 
-      #TODO: pick best skill, and upgrade
-      #conn.get("/levelup/0?skill=106&amp;chk=#{chk}").body
+      if chk
+        # Initialize levelup page
+        sleep(SLEEP)
+        conn.get("t/0?levelup=#{chk}").body
+
+        # Load levelup page
+        sleep(SLEEP)
+        levelup_page = conn.get('/levelup/0').body
+        available_skills = levelup_page.scan(/\/levelup\/0\?skill=(\d+)\&/).flatten.collect { |s| s.to_i }
+        log "Skills to upgrade: #{available_skills}"
+
+        sleep(SLEEP)
+        chk_arr = levelup_page.scan(/skill=[^c]+chk=([a-zA-Z0-9]+)/).flatten
+        chk = chk_arr.size > 0 ? chk_arr.first : nil
+        log chk ? "chk=#{chk}" : 'Could not find chk!'
+
+        #TODO: pick best skill, and upgrade
+        #conn.get("/levelup/0?skill=106&amp;chk=#{chk}").body
+      end
     end
   end
 
