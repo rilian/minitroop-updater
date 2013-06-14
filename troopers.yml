@@ -2,6 +2,7 @@ troopers:
   # supa-rilian
   - supri2
   - supri2-1
+  - supri2-2
   - supril3
   - supril3-1
   - supril4
@@ -17,7 +18,9 @@ troopers:
   - supril8-3
   - supril9
   - supril9-1
+  - supril10
   - supril10-1
+  - supril10-2
   - supril11
   - supril11-1
   - supril11-2
@@ -36,6 +39,19 @@ troopers:
   - supril17-1
   - supril18
   - supril18-1
+  - supril19
+  - supril19-1
+  - supril20
+  - supril20-1
+
+  # super-rilian
+  - supr7
+  - supr6
+  - supr5
+  - supr4
+  - sur3
+  - supr1
+  - sr3
 
   # rilian
   - super-rilian
