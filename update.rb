@@ -15,7 +15,6 @@ def log(str)
 end
 
 TROOPERS['troopers'].each do |trooper_name|
-  sleep(SLEEP)
   log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name) + 1} of #{TROOPERS['troopers'].count}"
   conn = Faraday.new(url: "http://#{trooper_name}.minitroopers.com") do |faraday|
     faraday.request :url_encoded # form-encode POST params
@@ -79,32 +78,43 @@ TROOPERS['troopers'].each do |trooper_name|
     end
   end
 
-  sleep(SLEEP)
   # Check if can upgrade
   log 'Checking if can upgrade'
+  sleep(SLEEP)
   upgrade_page = conn.get('/t/0').body
-
   upgrade_cost = upgrade_page.scan(/Upgrade\s+for\s+([0-9]+)/).flatten.first.to_i
   have_money = upgrade_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
-  if upgrade_cost <= have_money && have_money > 0
+  log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for next upgrade"
+  can_upgrade = upgrade_cost <= have_money && have_money > 0
+
+  if can_upgrade
+    log "Can upgrade http://#{trooper_name}.minitroopers.com/t/0"
     @can_upgrade_troopers << trooper_name
 
-    log "Trying upgrade http://#{trooper_name}.minitroopers.com/t/0"
-    sleep(SLEEP)
-    levelup_page = conn.get('levelup/0').body
-    available_skills = levelup_page.scan(/\/levelup\/0\?skill=(\d+)\&/).flatten.collect { |s| s.to_i }
-    log "Skills to upgrade: #{available_skills}"
-
-    sleep(SLEEP)
-    chk_arr = levelup_page.scan(/skill=[^c]+chk=([a-zA-Z0-9]+)/).flatten
+    chk_arr = upgrade_page.scan(/levelup=([a-zA-Z0-9]+)/).flatten
     chk = chk_arr.size > 0 ? chk_arr.first : nil
     log chk ? "chk=#{chk}" : 'Could not find chk!'
 
-    #TODO: pick best skill, and upgrade
-    #conn.get("/levelup/0?skill=106&amp;chk=#{chk}").body
-  end
+    if chk && DEBUG
+      # Initialize levelup page
+      sleep(SLEEP)
+      conn.get("t/0?levelup=#{chk}").body
 
-  log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for next upgrade"
+      # Load levelup page
+      sleep(SLEEP)
+      levelup_page = conn.get('/levelup/0').body
+      available_skills = levelup_page.scan(/\/levelup\/0\?skill=(\d+)\&/).flatten.collect { |s| s.to_i }
+      log "Skills to upgrade: #{available_skills}"
+
+      sleep(SLEEP)
+      chk_arr = levelup_page.scan(/skill=[^c]+chk=([a-zA-Z0-9]+)/).flatten
+      chk = chk_arr.size > 0 ? chk_arr.first : nil
+      log chk ? "chk=#{chk}" : 'Could not find chk!'
+
+      #TODO: pick best skill, and upgrade
+      #conn.get("/levelup/0?skill=106&amp;chk=#{chk}").body
+    end
+  end
 
   log '-'
   sleep(SLEEP)
