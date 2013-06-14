@@ -45,7 +45,7 @@ TROOPERS['troopers'].each do |trooper_name|
 
   if chk
     # Unlock mission if possible
-    sleep(2)
+    sleep(SLEEP)
     log 'Unlocking mission'
     conn.get "/unlock?mode=miss;chk=#{chk}"
 
@@ -79,8 +79,6 @@ TROOPERS['troopers'].each do |trooper_name|
     end
   end
 
-  #TODO: check if has recruiters
-
   sleep(SLEEP)
   # Check if can upgrade
   log 'Checking if can upgrade'
@@ -90,11 +88,23 @@ TROOPERS['troopers'].each do |trooper_name|
   have_money = upgrade_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
   if upgrade_cost <= have_money && have_money > 0
     @can_upgrade_troopers << trooper_name
-    log "http://#{trooper_name}.minitroopers.com/t/0"
-  end
-  log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for upgrade"
 
-  #TODO: try to auto upgrade
+    log "Trying upgrade http://#{trooper_name}.minitroopers.com/t/0"
+    sleep(SLEEP)
+    levelup_page = conn.get('levelup/0').body
+    available_skills = levelup_page.scan(/\/levelup\/0\?skill=(\d+)\&/).flatten.collect { |s| s.to_i }
+    log "Skills to upgrade: #{available_skills}"
+
+    sleep(SLEEP)
+    chk_arr = levelup_page.scan(/skill=[^c]+chk=([a-zA-Z0-9]+)/).flatten
+    chk = chk_arr.size > 0 ? chk_arr.first : nil
+    log chk ? "chk=#{chk}" : 'Could not find chk!'
+
+    #TODO: pick best skill, and upgrade
+    #conn.get("/levelup/0?skill=106&amp;chk=#{chk}").body
+  end
+
+  log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for next upgrade"
 
   log '-'
   sleep(SLEEP)
