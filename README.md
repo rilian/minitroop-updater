@@ -8,11 +8,13 @@ Features
 
 * Crawl through all given trooper names
 * Unlock missions
+* Auto accept recruits
 * Fight 3 times
 * Go to Mission 3 times
 * Raid 3 times
 * Check if trooper needs upgrade
-* In the end, return list of troopers that can upgrade
+* Try to upgrade automatically (in development)
+* In the end, return list of troopers that could upgrade
 * Log all fights
 
 How to use

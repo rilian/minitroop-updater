@@ -16,7 +16,7 @@ end
 
 TROOPERS['troopers'].each do |trooper_name|
   sleep(SLEEP)
-  log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name)} of #{TROOPERS['troopers'].count}"
+  log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name) + 1} of #{TROOPERS['troopers'].count}"
   conn = Faraday.new(url: "http://#{trooper_name}.minitroopers.com") do |faraday|
     faraday.request :url_encoded # form-encode POST params
     faraday.response :logger if DEBUG
@@ -24,6 +24,15 @@ TROOPERS['troopers'].each do |trooper_name|
     faraday.adapter Faraday.default_adapter
   end
   hq_page = conn.get('/hq').body
+
+  if !hq_page.scan(/New recruit available!/).empty?
+    log 'Adding new recruit'
+    sleep(SLEEP)
+    conn.get '/history'
+
+    sleep(SLEEP)
+    hq_page = conn.get('/hq').body
+  end
 
   # Find current money
   had_money = hq_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
