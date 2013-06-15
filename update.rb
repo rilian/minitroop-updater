@@ -4,7 +4,7 @@ require 'debugger'
 
 TROOPERS = YAML::load(File.open('troopers.yml'))
 
-SLEEP = 2
+SLEEP = 1
 DEBUG = false
 TRY_UPGRADE = false
 @can_upgrade_troopers = []
