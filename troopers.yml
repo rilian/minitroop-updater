@@ -46,6 +46,7 @@ troopers:
   - supril19-1
   - supril20
   - supril20-1
+  - supril20-2
   - supril21
   - supril21-1
   - supril22
@@ -59,7 +60,23 @@ troopers:
   - supril26
   - supril26-1
   - supril27
+  - supril27-1
   - supril28
+  - supril28-1
+  - supril29
+  - supril29-1
+  - supril30
+  - supril30-1
+  - supril31
+  - supril31-1
+  - supril32
+  - supril32-1
+  - supril33
+  - supril34
+  - supril35
+  - supril36
+  - supril37
+  - supril38
 
   # super-rilian
   - supr7
@@ -73,6 +90,7 @@ troopers:
   # rilian
   - super-rilian
   - andreyfenchenko
+  - af-1
   - rbot1
   - rbot1-1
   - rbot1-2
@@ -231,6 +249,4 @@ troopers:
   - 2341112
   - 2343124
   - 345234532
-
-punch_troopers:
-  - qpq
+  - kok001
