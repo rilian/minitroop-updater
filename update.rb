@@ -45,9 +45,11 @@ TROOPERS['troopers'].each do |trooper_name|
 
   if chk
     # Unlock mission if possible
-    sleep(SLEEP)
-    log 'Unlocking mission'
-    conn.get "/unlock?mode=miss;chk=#{chk}"
+    if had_money >= 5
+      sleep(SLEEP)
+      log 'Unlocking mission'
+      conn.get "/unlock?mode=miss;chk=#{chk}"
+    end
 
     #TODO: check if has missions
 
@@ -64,7 +66,7 @@ TROOPERS['troopers'].each do |trooper_name|
     3.times do |index|
       sleep(SLEEP)
       log "Fighting #{index}"
-      conn.post '/b/battle', {chk: chk, friend: TROOPERS['punch_troopers'].sample}
+      conn.post '/b/battle', { chk: chk, friend: 'qpq' } # punch trooper
     end
 
     # Check if can go to Raids
