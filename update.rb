@@ -8,6 +8,7 @@ SLEEP = 1
 DEBUG = false
 TRY_UPGRADE = false
 @can_upgrade_troopers = []
+@total_money = 0
 @log_file = File.open("#{Time.now.strftime('%d-%b_%H-%M-%S')}_minitroopers.log", 'w')
 
 def log(str)
@@ -89,6 +90,7 @@ TROOPERS['troopers'].each do |trooper_name|
   have_money = upgrade_page.scan(/([0-9]+)\s+<\/div>\s+<div\s+class="power/).flatten.first.to_i
   log "Has #{had_money}->#{have_money} money, need #{upgrade_cost} for next upgrade"
   can_upgrade = upgrade_cost <= have_money && have_money > 0
+  @total_money += (have_money - had_money)
 
   if can_upgrade
     log "Can upgrade http://#{trooper_name}.minitroopers.com/t/0"
@@ -131,5 +133,7 @@ if @can_upgrade_troopers.size > 0
     log "http://#{trooper_name}.minitroopers.com/t/0"
   end
 end
+
+puts "Total money earned: #{@total_money}"
 
 @log_file.close
