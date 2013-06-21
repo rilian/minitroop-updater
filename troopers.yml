@@ -1,5 +1,8 @@
 troopers:
   # supa-rilian
+  - supril1
+  - supril1-1
+
   - supri2
   - supri2-1
   - supri2-2
@@ -55,7 +58,7 @@ troopers:
   - supril19-1
   - supril19-2
   - supril20
-  - supril20-1
+  - suprl20-1
   - supril20-2
   - supril21
   - supril21-1
@@ -117,9 +120,19 @@ troopers:
   - supril40
   - supril40-1
   - supril40-2
-
   - supril41
+  - supril41-1
+  - supril41-2
   - supril42
+  - supril42-1
+  - supril42-2
+
+  - supril43
+  - supril43-1
+  - supril44
+  - supril45
+  - supril46
+  - supril47
 
   # super-rilian
   - supr7
@@ -277,8 +290,6 @@ troopers:
   - 2ghyuu
   - mauglibro
   - 2ghj
-  - antikodak
-  - 777lexa777
   - 23342
   - 2134423
   - 234343
