@@ -52,8 +52,6 @@ TROOPERS['troopers'].each do |trooper_name|
       conn.get "/unlock?mode=miss;chk=#{chk}"
     end
 
-    #TODO: check if has missions
-
     # Perform 3 Missions
     # Missions then Fight give better change to Infiltrate mission next time
     # which is better for winning more
@@ -71,14 +69,16 @@ TROOPERS['troopers'].each do |trooper_name|
     end
 
     # Check if can go to Raids
-    can_raid = (hq_page.scan(/b\/raid\?/).size > 0)
-    if can_raid
-      # Perform 3 Raids
-      3.times do |index|
-        sleep(SLEEP)
-        log "Raid #{index}"
-        conn.get "b/raid?chk=#{chk}"
-      end
+    raid_index = 1
+    while hq_page.scan(/b\/raid\?/).size > 0
+      # Perform Raids
+      sleep(SLEEP)
+      log "Raid #{raid_index}"
+      conn.get "b/raid?chk=#{chk}"
+      raid_index += 1
+
+      sleep(SLEEP)
+      hq_page = conn.get('/hq').body
     end
   end
 
@@ -134,6 +134,6 @@ if @can_upgrade_troopers.size > 0
   end
 end
 
-puts "Total money earned: #{@total_money}"
+log "Total money earned: #{@total_money}"
 
 @log_file.close
