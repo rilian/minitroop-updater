@@ -7,7 +7,7 @@ GEM
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.2.1)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.2)
+    debugger-ruby_core_source (1.2.3)
     domain_name (0.5.12)
       unf (>= 0.0.5, < 1.0.0)
     faraday (0.8.7)
