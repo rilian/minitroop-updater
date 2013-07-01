@@ -150,12 +150,13 @@ troopers:
   - supril50
   - supril50-1
   - supril50-2
-
   - supril51
+  - supril51-1
   - supril51-2
-
   - supril52
   - supril52-1
+  - supril52-2
+
   - supril53
   - supril53-1
   - supril54
@@ -176,6 +177,10 @@ troopers:
   - supril61-1
   - supril62
   - supril62-1
+  - supril63
+  - supril63-1
+  - supril64
+  - supril65
 
   # super-rilian
   - supr7
