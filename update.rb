@@ -3,8 +3,9 @@ require 'faraday-cookie_jar'
 require 'debugger'
 
 TROOPERS = YAML::load(File.open('troopers.yml'))
+SKILLS = YAML::load(File.open('skills.yml'))
 
-SLEEP = 0.2
+SLEEP = 0.1
 DEBUG = false
 TRY_UPGRADE = false
 @can_upgrade_troopers = []
@@ -15,6 +16,14 @@ def log(str)
   @log_file.write("#{str}\r\n")
   puts str
 end
+
+#def best_skill(skill_ids)
+#  indexes = []
+#  skill_numbers = SKILLS['skills'].collect { |s| s[:number] }
+#  Array.wrap(skill_ids).each do |skill_id|
+#    indexes << skill_numbers.index(skill_id)
+#  end
+#end
 
 TROOPERS['troopers'].each do |trooper_name|
   log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name) + 1} of #{TROOPERS['troopers'].count}"
@@ -52,10 +61,11 @@ TROOPERS['troopers'].each do |trooper_name|
       conn.get "/unlock?mode=miss;chk=#{chk}"
     end
 
-    # Perform 3 Missions
+    # Perform 3 Missions (or more)
     # Missions then Fight give better change to Infiltrate mission next time
     # which is better for winning more
-    3.times do |index|
+    missions_number = [hq_page.scan(/\/b\/opp/).count, 3].max
+    missions_number.times do |index|
       sleep(SLEEP)
       log "Mission #{index}"
       conn.get "b/mission?chk=#{chk}"
@@ -129,8 +139,9 @@ end
 
 if @can_upgrade_troopers.size > 0
   log 'Upgrade:'
-  @can_upgrade_troopers.each do |trooper_name|
+  @can_upgrade_troopers.each_with_index do |trooper_name, index|
     log "http://#{trooper_name}.minitroopers.com/t/0"
+    log '' if index % 20 == 0 && index != 0
   end
 end
 
