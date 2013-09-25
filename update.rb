@@ -61,10 +61,11 @@ TROOPERS['troopers'].each do |trooper_name|
       conn.get "/unlock?mode=miss;chk=#{chk}"
     end
 
-    # Perform 3 Missions
+    # Perform 3 Missions (or more)
     # Missions then Fight give better change to Infiltrate mission next time
     # which is better for winning more
-    3.times do |index|
+    missions_number = [hq_page.scan(/\/b\/opp/).count, 3].max
+    missions_number.times do |index|
       sleep(SLEEP)
       log "Mission #{index}"
       conn.get "b/mission?chk=#{chk}"
