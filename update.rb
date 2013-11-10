@@ -6,7 +6,7 @@ TROOPERS = YAML::load(File.open('troopers.yml'))
 SKILLS = YAML::load(File.open('skills.yml'))
 
 SLEEP = 0.1
-RETRY_SEC = 30.0
+RETRY_SEC = 10.0
 DEBUG = false
 TRY_UPGRADE = false
 @can_upgrade_troopers = []
