@@ -1,6 +1,6 @@
 require 'faraday'
 require 'faraday-cookie_jar'
-require 'debugger'
+require 'yaml'
 
 TROOPERS = YAML::load(File.open('troopers.yml'))
 SKILLS = YAML::load(File.open('skills.yml'))
