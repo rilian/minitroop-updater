@@ -26,8 +26,13 @@ end
 #  end
 #end
 
-TROOPERS['troopers'].each do |trooper_name|
-  log "Working on #{trooper_name} #{TROOPERS['troopers'].index(trooper_name) + 1} of #{TROOPERS['troopers'].count}"
+TROOPERS['troopers'].each_with_index do |trooper_name, index|
+  if ENV.has_key?('START_WITH') && index + 1 < ENV['START_WITH'].to_i
+    puts "Skip #{index + 1}"
+    next
+  end
+
+  log "Working on #{trooper_name} #{index + 1} of #{TROOPERS['troopers'].count}"
   conn = Faraday.new(url: "http://#{trooper_name}.minitroopers.com") do |faraday|
     faraday.request :url_encoded # form-encode POST params
     faraday.response :logger if DEBUG
